@@ -38,5 +38,8 @@ RUN a2ensite 000-service
 
 WORKDIR ${HOME_DIR}
 
+EXPOSE 80
+EXPOSE 443
+
 ENTRYPOINT [ "/bin/bash", "-c" ]
 CMD [ "${HOME_DIR}/run.sh" ]
