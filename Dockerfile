@@ -1,5 +1,6 @@
 # Created by Alexandre Marcelo (@xandecelo), nov-2022
 # More information at https://github.com/xandecelo/httpd-saml2-sp
+# This image is available at https://github.com/xandecelo/httpd-saml2-sp
 
 FROM ubuntu:20.04
 ENV HOME_DIR=/opt/httpd-saml2-sp
