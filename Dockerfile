@@ -3,6 +3,11 @@
 # This image is available at https://github.com/xandecelo/httpd-saml2-sp
 
 FROM ubuntu:20.04
+
+LABEL org.opencontainers.image.source=https://github.com/xandecelo/httpd-saml2-sp
+LABEL org.opencontainers.image.description="A quick SAML2 Service Provider (SP) test environment, using default Apache HTTP Server + mod_auth_mellon"
+LABEL org.opencontainers.image.licenses=apache2
+
 ENV HOME_DIR=/opt/httpd-saml2-sp
 
 # Image configuration
