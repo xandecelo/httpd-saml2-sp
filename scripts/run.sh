@@ -32,7 +32,7 @@ fi
 
 pushd /etc/apache2/saml2
 curl -v $IDP_METADATA_XML_URL -o /etc/apache2/saml2/idp_metadata.xml
-mellon_create_metadata app1 "https://${SERVICE_HOSTNAME}/"
+mellon_create_metadata app1 "https://${SERVICE_HOSTNAME}/mellon/"
 cp app1.xml /var/www
 popd
 
