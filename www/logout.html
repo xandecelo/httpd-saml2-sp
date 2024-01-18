@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+    <script>
+        let PROCESS_CODE = "process_code";
+        let CURRRENT_COUNTER = "current_counter";
+        let URL_LOGOUT_SET = [ "https://dev.local/mellon/logout?page=1", "https://dev.local/mellon/logout?page=2" ];
+        let END_URL = "https://dev.local?page=final"
+        // https://dev.local/mellon/logout?page=1&ReturnTo=/?a=1
+        let localURL = new URL(document.URL);
+        let suppliedCode = localURL.searchParams.get(PROCESS_CODE);
+
+        console.log("URL: " + localURL +  " suppliedCode: " + suppliedCode);
+
+        generateProcessCode =  function() {
+            let generatedCode = Math.random().toString(16).substr(2, 8);
+            localStorage.setItem ( PROCESS_CODE, generatedCode);
+        }
+
+        getCode = function() { 
+            return localStorage.getItem ( PROCESS_CODE );
+        }
+
+        processCounterStep = function(item) {
+            let step = 0;
+            if (typeof item === "number") {
+                step = item;
+            } else { 
+                step = parseInt(localStorage.getItem(CURRRENT_COUNTER), 10);
+                step = step === null ? 0 : step + 1;
+            }
+            localStorage.setItem(CURRRENT_COUNTER, step);
+        }
+
+        getCounterStep = function() {
+            return localStorage.getItem(CURRRENT_COUNTER);
+        }
+
+        doYourThing = function () {
+            if ( getCode() === null || suppliedCode !== getCode()) {
+                generateProcessCode();
+                processCounterStep(0);
+            } else {
+                processCounterStep();
+            }
+            
+            let urlToRedirect = END_URL;
+
+            if (getCounterStep() < URL_LOGOUT_SET.length) {
+                let QUESTION_MARK_SYMBOL = "?";
+
+                let urlToReturn = new URL(document.URL);
+                urlToReturn.searchParams.set(PROCESS_CODE, getCode());
+
+                urlToRedirect = new URL(URL_LOGOUT_SET[getCounterStep()]);
+                urlToRedirect.searchParams.set("ReturnTo" , urlToReturn);
+            } else {
+                localStorage.clear();
+            }
+
+            location.assign(urlToRedirect);
+        }
+
+        doYourThing();
+
+    </script>
+</body>
+
+</html>
